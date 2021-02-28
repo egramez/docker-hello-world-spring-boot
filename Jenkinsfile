@@ -52,7 +52,7 @@ node {
       sh "ls -all /var/run/docker.sock"
       sh "mv ./target/hello*.jar ./data" 
       
-      sh "docker build -t ${dockerImageTag}"
+      sh "docker build . -t ${dockerImageTag}"
 
 
       //dockerImage = docker.build("hello-world-java:${env.BUILD_ID}")
@@ -68,7 +68,7 @@ node {
       echo "Docker Image Tag Name: ${dockerImageTag}"
 
       sh "docker login -u $USERNAME -p $PASSWORD  ${dockerRepoUrl}"
-      //sh "docker tag ${dockerImageName} ${dockerImageTag}"
+      //sh "docker tag ${dockerImageName} ${dockerImageTag}" 
       sh "docker push ${dockerImageTag}"      
       }
 
