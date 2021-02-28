@@ -7,7 +7,7 @@ node {
     def dockerImage
     // ip address of the docker private repository(nexus)
     
-    def dockerRepoUrl = "gcr.io/teak-passage-305908"
+    def dockerRepoUrl = "pickmeacr.azurecr.io"
     def dockerImageName = "/dev/demo-app"
     def dockerImageTag = "${dockerRepoUrl}/${dockerImageName}:${env.BUILD_NUMBER}"
     
@@ -59,12 +59,17 @@ node {
     stage('Publish Docker Image'){
       node("build-server") {
       // deploy docker image to nexus
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'acrcred',
+      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
+      sh 'echo uname=$USERNAME pwd=$PASSWORD'
       echo "Docker Image Tag Name: ${dockerImageTag}"
 
-      sh "docker login -u admin -p admin123 ${dockerRepoUrl}"
+      sh "docker login -u $USERNAME -p $PASSWORD  ${dockerRepoUrl}"
       sh "docker tag ${dockerImageName} ${dockerImageTag}"
-      sh "docker push ${dockerImageTag}"
+      sh "docker push ${dockerImageTag}"      
+      }
+
     }
  }
 
