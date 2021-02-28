@@ -9,7 +9,7 @@ node {
     
     def dockerRepoUrl = "pickmeacr.azurecr.io"
     def dockerImageName = "demo-app"
-    def dockerImageTag = "${dockerRepoUrl}/${dockerImageName}:${env.BUILD_NUMBER}"
+    def dockerImageTag = "${dockerRepoUrl}/${dockerImageName}:dev_${env.BUILD_NUMBER}"
     
     stage('Clone Repo') 
      { 
