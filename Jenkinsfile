@@ -8,7 +8,7 @@ node {
     // ip address of the docker private repository(nexus)
     
     def dockerRepoUrl = "pickmeacr.azurecr.io"
-    def dockerImageName = "/dev/demo-app"
+    def dockerImageName = "dev/demo-app"
     def dockerImageTag = "${dockerRepoUrl}/${dockerImageName}:${env.BUILD_NUMBER}"
     
     stage('Clone Repo') 
@@ -62,7 +62,6 @@ node {
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'acrcred',
       usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-      sh 'echo uname=$USERNAME pwd=$PASSWORD'
       echo "Docker Image Tag Name: ${dockerImageTag}"
 
       sh "docker login -u $USERNAME -p $PASSWORD  ${dockerRepoUrl}"
