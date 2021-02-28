@@ -16,7 +16,10 @@ node {
        node("build-server") {
        // for display purposes
       // Get some code from a GitHub repository
-      git 'https://github.com/egramez/docker-hello-world-spring-boot.git'
+
+      git branch: 'dev',url: 'https://github.com/jenkinsci/jenkins.git'
+      //git 'https://github.com/egramez/docker-hello-world-spring-boot.git'
+      
       // Get the Maven tool.
       // ** NOTE: This 'maven-3.6.1' Maven tool must be configured
       // **       in the global configuration.           
