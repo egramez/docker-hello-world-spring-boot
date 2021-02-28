@@ -8,7 +8,7 @@ node {
     // ip address of the docker private repository(nexus)
     
     def dockerRepoUrl = "pickmeacr.azurecr.io"
-    def dockerImageName = "dev/demo-app"
+    def dockerImageName = "demo-app"
     def dockerImageTag = "${dockerRepoUrl}/${dockerImageName}:${env.BUILD_NUMBER}"
     
     stage('Clone Repo') 
@@ -43,7 +43,7 @@ node {
 		  archive 'target/*.jar'
         },
         publishJunitTestsResultsToSonar: {
-          echo "This is branch b"
+          echo "This is branch dev"
       })
                  }
     }
