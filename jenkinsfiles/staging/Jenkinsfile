@@ -23,7 +23,7 @@ GetImages()''']]]])])
 node {
     
         stage('Deploy Staging') {
-                git url: 'https://github.com/egramez/docker-hello-world-spring-boot'
+                git url: 'https://github.com/egramez/docker-hello-world-spring-boot' , branch: 'staging'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "teak-passage-305908",
                         clusterName: "demo-cluster",
