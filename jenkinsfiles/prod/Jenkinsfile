@@ -28,7 +28,7 @@ node {
                         projectId: "teak-passage-305908",
                         clusterName: "demo-cluster",
                         zone: "us-central1-c",
-                        manifestPattern: 'k8s/staging/',
+                        manifestPattern: 'k8s/prod/',
                         credentialsId: "teak-passage-305908",
                         verifyDeployments: true])
         }    
