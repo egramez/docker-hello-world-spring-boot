@@ -23,7 +23,7 @@ GetImages()''']]]])])
 node {
     
         stage('Deploy to Prod') {
-                git url: 'https://github.com/egramez/docker-hello-world-spring-boot' branch: 'prod'
+                git url: 'https://github.com/egramez/docker-hello-world-spring-boot', branch: 'prod'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "teak-passage-305908",
                         clusterName: "demo-cluster",
