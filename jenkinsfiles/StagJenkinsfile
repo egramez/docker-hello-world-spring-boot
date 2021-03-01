@@ -1,0 +1,31 @@
+node {
+    
+        stage('Deploy Staging') {
+                git url: 'https://github.com/egramez/docker-hello-world-spring-boot'
+                step([$class: 'KubernetesEngineBuilder', 
+                        projectId: "teak-passage-305908",
+                        clusterName: "demo-cluster",
+                        zone: "us-central1-c",
+                        manifestPattern: 'k8s/staging/',
+                        credentialsId: "teak-passage-305908",
+                        verifyDeployments: true])
+        }    
+//    stage('Deploy App') {
+//      node("build-server") {
+//        script {
+//          kubernetesDeploy(configs: "deployments/deployment.yml", kubeconfigId: "kubeconfig")
+//       }
+//     }
+//   }
+
+//kubernetesDeploy(kubeconfigId: 'kubeconfig'
+//                 configs: 'deployments/*.yml', // REQUIRED
+//                 enableConfigSubstitution: false,
+//        
+//                 secretNamespace: 'dev',
+//                 secretName: 'ImagePullSecret',
+//                 dockerCredentials: [
+//                        [credentialsId: '<credentials-id-for-other-private-registry>', url: 'pickmeacr.azurecr.io'],
+//                 ]
+//)
+}
