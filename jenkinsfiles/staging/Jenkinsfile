@@ -1,3 +1,25 @@
+properties([parameters([[$class: 'ChoiceParameter', choiceType: 'PT_SINGLE_SELECT', description: '', filterLength: 1, filterable: false, name: 'Image_tag', randomName: 'choice-parameter-99378024251915', script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: ''], script: [classpath: [], sandbox: false, script: '''import groovy.json.JsonSlurper
+
+def GetImages() {
+def url = "curl -u pickmeacr:572+ft=aAduw6ZpJsFvTw5XLzbzdmu20 https://pickmeacr.azurecr.io/acr/v1/demo-app/_tags"
+def gcr_tags_json = url.execute().text.replaceAll("\\r\\n", "")
+
+def jsonFieldName = "tags"
+def json = new groovy.json.JsonSlurper().parseText (gcr_tags_json)
+get = { field, json2 ->
+    field.tokenize(".").inject(json2) { map, f -> map[f] }
+}
+def json1 = get jsonFieldName, json
+
+def jsonFieldName2 = "name"
+get = { field, json3 ->
+    field.tokenize(".").inject(json3) { map, f -> map[f] }
+}
+brand = get jsonFieldName2, json1
+}
+
+GetImages()''']]]])])
+
 node {
     
         stage('Deploy Staging') {
