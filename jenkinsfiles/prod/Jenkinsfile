@@ -32,6 +32,23 @@ node {
                         credentialsId: "teak-passage-305908",
                         verifyDeployments: true])
         }   */  
+    stage('Clone Repo') 
+     { 
+       node("build-server") {
+       // for display purposes
+      // Get some code from a GitHub repository
+
+      git branch: 'prod',url: 'https://github.com/jenkinsci/jenkins.git'
+      //git 'https://github.com/egramez/docker-hello-world-spring-boot.git'
+      
+      // Get the Maven tool.
+      // ** NOTE: This 'maven-3.6.1' Maven tool must be configured
+      // **       in the global configuration.           
+      mvnHome = tool 'maven-3.6.1'
+       }
+    }   
+
+
     stage('Deploy to Prod') {
       node("build-server") {
         script {
