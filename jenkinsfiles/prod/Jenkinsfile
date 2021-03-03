@@ -22,8 +22,8 @@ GetImages()''']]]])])
 
 node {
     
-        stage('Deploy to Prod') {
-                git url: 'https://github.com/egramez/docker-hello-world-spring-boot' branch: 'prod'
+    /*    stage('Deploy to Prod') {
+                git url: 'https://github.com/egramez/docker-hello-world-spring-boot', branch: 'prod'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "teak-passage-305908",
                         clusterName: "demo-cluster",
@@ -31,23 +31,40 @@ node {
                         manifestPattern: 'k8s/prod/',
                         credentialsId: "teak-passage-305908",
                         verifyDeployments: true])
-        }    
-//    stage('Deploy App') {
-//      node("build-server") {
-//        script {
-//          kubernetesDeploy(configs: "deployments/deployment.yml", kubeconfigId: "kubeconfig")
-//       }
-//     }
-//   }
+        }   */  
+    stage('Clone Repo') 
+     { 
+       node("build-server") {
+       // for display purposes
+      // Get some code from a GitHub repository
 
-//kubernetesDeploy(kubeconfigId: 'kubeconfig'
-//                 configs: 'deployments/*.yml', // REQUIRED
-//                 enableConfigSubstitution: false,
-//        
-//                 secretNamespace: 'dev',
-//                 secretName: 'ImagePullSecret',
-//                 dockerCredentials: [
-//                        [credentialsId: '<credentials-id-for-other-private-registry>', url: 'pickmeacr.azurecr.io'],
-//                 ]
-//)
+      git branch: 'prod',url: 'https://github.com/jenkinsci/jenkins.git'
+      //git 'https://github.com/egramez/docker-hello-world-spring-boot.git'
+      
+      // Get the Maven tool.
+      // ** NOTE: This 'maven-3.6.1' Maven tool must be configured
+      // **       in the global configuration.           
+      mvnHome = tool 'maven-3.6.1'
+       }
+    }   
+
+
+    stage('Deploy to Prod') {
+      node("build-server") {
+        script {
+          kubernetesDeploy(kubeconfigId: 'kubeconfig',               // REQUIRED
+
+                 configs: 'deployments/prod/**.yaml', // REQUIRED
+                 enableConfigSubstitution: false,
+        
+                 secretNamespace: 'prod',
+                 secretName: 'acrauth',
+                 dockerCredentials: [
+                        
+                        [credentialsId: 'acrcred', url: 'pickmeacr.azurecr.io']
+                 ]
+)
+       }
+     }
+   }
 }

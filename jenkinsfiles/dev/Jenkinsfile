@@ -78,4 +78,24 @@ node {
     }
  }
 
+
+     stage('Deploy to Dev') {
+      node("build-server") {
+        script {
+          kubernetesDeploy(kubeconfigId: 'kubeconfig',               // REQUIRED
+
+                 configs: 'deployments/dev/**', // REQUIRED
+                 enableConfigSubstitution: false,
+        
+                 secretNamespace: 'dev',
+                 secretName: 'acrauth',
+                 dockerCredentials: [
+                        
+                        [credentialsId: 'acrcred', url: 'pickmeacr.azurecr.io']
+                 ]
+)
+       }
+     }
+   }
+
 }
