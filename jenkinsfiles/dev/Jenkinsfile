@@ -17,7 +17,7 @@ node {
        // for display purposes
       // Get some code from a GitHub repository
 
-      git branch: 'dev',url: 'https://github.com/jenkinsci/jenkins.git'
+      git branch: 'dev',url: 'https://github.com/egramez/docker-hello-world-spring-boot.git'
       //git 'https://github.com/egramez/docker-hello-world-spring-boot.git'
       
       // Get the Maven tool.
