@@ -32,22 +32,22 @@ node {
                         credentialsId: "teak-passage-305908",
                         verifyDeployments: true])
         }   */  
-    stage('Deploy App') {
+    stage('Deploy to Prod') {
       node("build-server") {
         script {
-          kubernetesDeploy(configs: "deployments/prod/deployment.yaml", kubeconfigId: "kubeconfig")
+          kubernetesDeploy(kubeconfigId: 'kubeconfig',               // REQUIRED
+
+                 configs: 'deployments/prod/**.yaml', // REQUIRED
+                 enableConfigSubstitution: false,
+        
+                 secretNamespace: 'prod',
+                 secretName: 'acrauth',
+                 dockerCredentials: [
+                        
+                        [credentialsId: 'acrcred', url: 'pickmeacr.azurecr.io']
+                 ]
+)
        }
      }
    }
-
-//kubernetesDeploy(kubeconfigId: 'kubeconfig'
-//                 configs: 'deployments/*.yml', // REQUIRED
-//                 enableConfigSubstitution: false,
-//        
-//                 secretNamespace: 'dev',
-//                 secretName: 'ImagePullSecret',
-//                 dockerCredentials: [
-//                        [credentialsId: '<credentials-id-for-other-private-registry>', url: 'pickmeacr.azurecr.io'],
-//                 ]
-//)
 }
