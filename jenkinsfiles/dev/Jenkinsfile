@@ -84,7 +84,7 @@ node {
         script {
           kubernetesDeploy(kubeconfigId: 'kubeconfig',               // REQUIRED
 
-                 configs: 'deployments/dev/**.yaml', // REQUIRED
+                 configs: 'deployments/dev/**', // REQUIRED
                  enableConfigSubstitution: false,
         
                  secretNamespace: 'dev',
