@@ -22,7 +22,7 @@ GetImages()''']]]])])
 
 node {
     
-        stage('Deploy to Prod') {
+    /*    stage('Deploy to Prod') {
                 git url: 'https://github.com/egramez/docker-hello-world-spring-boot', branch: 'prod'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "teak-passage-305908",
@@ -31,14 +31,14 @@ node {
                         manifestPattern: 'k8s/prod/',
                         credentialsId: "teak-passage-305908",
                         verifyDeployments: true])
-        }    
-//    stage('Deploy App') {
-//      node("build-server") {
-//        script {
-//          kubernetesDeploy(configs: "deployments/deployment.yml", kubeconfigId: "kubeconfig")
-//       }
-//     }
-//   }
+        }   */  
+    stage('Deploy App') {
+      node("build-server") {
+        script {
+          kubernetesDeploy(configs: "deployments/prod/deployment.yaml", kubeconfigId: "kubeconfig")
+       }
+     }
+   }
 
 //kubernetesDeploy(kubeconfigId: 'kubeconfig'
 //                 configs: 'deployments/*.yml', // REQUIRED
